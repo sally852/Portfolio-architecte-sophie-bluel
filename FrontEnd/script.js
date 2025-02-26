@@ -126,6 +126,12 @@ const openAddPhotoBtn = document.querySelector(".btn-add");
 const closeAddPhotoBtn = document.querySelector(".bttn-close");
 const goBackBtn = document.querySelector(".btn-goback");
 const editBtn = document.querySelector(".edit-btn");
+const form = document.getElementById("ProjectForm");
+const titleInput = document.getElementById("titleInput");
+const confirmBtn = document.getElementById("confirmBtn");
+const fileInput = document.getElementById("fileInput");
+const addPhotoBtn = document.getElementById("addPhotoBtn");
+const preview = document.getElementById("preview");
 
 
 //modal
@@ -182,6 +188,7 @@ const displayModalProjects = (projects) => {
   projects.forEach((project) => {
     const figure = document.createElement('figure'); 
     figure.classList.add("photo-container");
+    figure.setAttribute("data-id", project.id);
     
     const img = document.createElement('img');
     img.classList.add("img-container");
@@ -198,10 +205,11 @@ const displayModalProjects = (projects) => {
     figure.appendChild(deleteIcon);
     gallery.appendChild(figure);
   });
+  addDeleteEvent();
 };
 
 
-//display categorys on modal
+//display categorys on the modal
 const displayModalCategory = (categories) => {
   const categorySelect = document.getElementById("categorySelect");
   
@@ -215,10 +223,6 @@ const displayModalCategory = (categories) => {
 
 
 //files picker
-const fileInput = document.getElementById("fileInput");
-const addPhotoBtn = document.getElementById("addPhotoBtn");
-const preview = document.getElementById("preview");
-
 addPhotoBtn.addEventListener("click", () => {
   fileInput.click(); 
 });
@@ -238,15 +242,91 @@ fileInput.addEventListener("change", (event) => {
 
 
 
+
+// delete project
+const addDeleteEvent = () => {
+  document.querySelectorAll(".delete-btn").forEach(button => {
+    button.addEventListener("click", async (event) => {
+      const figure = event.target.closest(".photo-container");
+      const projectId = figure.getAttribute("data-id");
+
+      const confirmation = confirm("Are you sure you want to delete this photo?");
+
+      try {
+        const response = await fetch(`http://localhost:5678/api/works/${projectId}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to delete!");
+        }
+
+        figure.remove(); 
+        alert("Photo deleted!");
+
+      } catch (error) {
+        console.error("Erreur :", error);
+      }
+    });
+  });
+};
+
+
+
+//add project
+confirmBtn.addEventListener("click", async () => {
+
+  const file = fileInput.files[0]; 
+  const title = titleInput.value; 
+  const categoryId = categorySelect.value;
+   
+  if (!title || !categoryId || !file) {
+    alert("not correctly filled out!");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("title", title);  
+  formData.append("category", categoryId);  
+  formData.append("image", file);  
+
+  try {
+    const response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`, 
+      },
+      body: formData, 
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add the project!");
+    }
+
+    const data = await response.json();
+
+    alert("correctly sent!");
+  
+    console.log("added:", data);
+
+  } catch (error) {
+    console.error(error);
+  }
+  modal.classList.add("hidden");
+  modall.classList.add("hidden");
+  overlay.classList.add("hidden");
+});
+
+
+
 // logout
 document.getElementById('logout-button').addEventListener('click', () => {
   
   localStorage.removeItem('authToken');
   window.location.href = 'index.html';
 })
-
-
-
-
-
 
