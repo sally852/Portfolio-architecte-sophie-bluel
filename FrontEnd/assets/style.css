@@ -22,6 +22,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	box-sizing: border-box;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -52,6 +53,8 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color:   #FFFEF8;
+	position: relative;
 }
 header {
 	display: flex;
@@ -68,7 +71,7 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 
 h1 > span {
@@ -91,10 +94,15 @@ nav ul {
 
 }
 nav li {
-	padding: 0 10px;
+	padding: 0 15px;
 	font-size: 1.2em;
 }
-
+#logout-button{
+	display: none;
+}
+nav img {
+	height: 22px;
+}
 li:hover {
 	color: #B1663C;
 }
@@ -138,7 +146,7 @@ li:hover {
 
 }
 #contact {
-	width: 50%;
+width: 50%;
 margin: auto;
 }
 #contact > * {
@@ -180,9 +188,359 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
-footer nav ul {
+footer{
+	width: 100vw;
+	background-color: #fff;
+	height: 60px;
+	left: 50%;
+    transform: translateX(-50%); 
+	position: relative;
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	align-items: center;
+}
+footer nav ul {
+	margin-right: 100px;
 }
 
+ 
+
+/**********buttons******/
+#category-buttons{
+margin: 40px;
+display: flex;
+justify-content: center;
+}
+button {
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+	font-family: 'Syne';
+	font-weight: 700;
+	color:#1D6154 ;
+	padding: 9px 25px;
+	background-color: #FFFEF8;
+	text-align: center;
+	border-radius: 60px ;
+	border: 1px solid #1D6154;
+}
+button:hover {
+	color:#fff ;
+	background-color: #1D6154;
+}
+.all-button {
+	color:#fff ;
+	background-color: #1D6154;
+}
+
+button.active {
+	color:#fff ;
+	background-color: #1D6154;
+}
+
+
+
+
+/*******login page ********/
+.login{
+	font-weight: bold;
+}
+#login-section{
+	width: 50%;
+	margin: auto;
+	padding-bottom: 337px;
+}
+#login-section > * {
+	text-align: center;
+
+}
+#login-section h2{
+	margin-bottom: 20px;
+}
+#login-section form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#login-section input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#login-section label {
+	margin: 2em 0 1em 0;
+}
+#contact textarea {
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+button[type="submit"]{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	padding: 9px 38px;
+	width: 126px;
+	text-align: center;
+	border-radius: 60px ;
+}
+#login-section a{
+	color: black;
+}
+
+
+/*****Modal*******/
+.btn-open{
+	position: absolute;
+    top: 13.8%;
+	left: 63%;
+	height: 30px;
+	border: none;
+	color: black;
+	font-size: 14px;
+	font-weight: 400;
+}
+.btn-open:hover{
+	background-color: #fff;
+	color: black;
+}
+.edit-btn img{
+	position: absolute;
+    top: 14.2%;
+	left: 62%;
+
+}
+.modal {
+	gap: 0.4rem;
+	width: 62%;
+	height: 19%;
+	position: absolute;
+	top: 12%;
+	left: 16.5%;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	z-index: 8;
+  }
+  
+  
+  
+  .popup-delete h3{
+    display: flex;
+	justify-content: center;
+	font-size: 26px;
+	font-weight: 400;
+	margin-top: 50px;
+  }
+  #delete-img{
+	margin: 30px 115px;
+	height: 65%;
+	border-bottom: solid 1px #B3B3B3;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+  }
+
+  #delete-img img {
+	width: 85px;
+	position: relative;
+  }
+  figure{
+	position: relative;
+	display: inline-block;
+  }
+  figure .img-container{
+	display: block;
+	width: 100%;
+	height: auto;
+  }
+  figure button{
+    position: absolute; 
+    top: 0;
+    right:0 ;
+    background: rgba(0, 0, 0); 
+    color: white;
+    border: none;
+    padding: 2px 5px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 3px;
+  }
+  .edit-btn{
+	display: none;
+  }
+  
+  .modal button {
+	cursor: pointer;
+	border: none;
+	font-weight: 600;
+  }
+  
+  .btn-add {
+  background-color: #1D6154;
+  color: #fff;
+  width: 40%;
+  position: absolute;
+  margin: 45px 30%;
+  bottom: 0;
+	
+  }
+  
+  .btn-open {
+	position: absolute;
+	bottom: 150px;
+  }
+  
+  .modal .btn-close {
+    position: absolute;
+	right: 0;
+    font-weight: bold;
+	color: black;
+	font-size: 24px;
+  }
+  .btn-goback img{
+	width: 16px;
+  }
+
+  .overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+  }
+
+  .hidden{
+	display: none;
+  }
+
+
+  
+  .modall {
+	gap: 0.4rem;
+	width: 62%;
+	height: 19%;
+	position: absolute;
+	top: 12%;
+	left: 16.5%;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	z-index: 8;
+  }
+  .popup-add section{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  }
+  .bttn-close {
+    position: absolute;
+	right: 0;
+    font-weight: bold;
+	color: black;
+	font-size: 24px;
+	border: none;
+	background-color: #fff;
+  }
+  .btn-goback{
+    position: absolute;
+	left: 0;
+    font-weight: bold;
+	color: black;
+	font-size: 24px;
+	border: none;
+	background-color: #fff;
+  }
+  .popup-add h3{
+	display: flex;
+	justify-content: center;
+	font-size: 26px;
+	font-weight: 400;
+	margin-top: 50px;
+  }
+  #add-img{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	position: relative;
+	gap: 10%;
+	width: 420px;
+	height: 32%;
+	font-size: 26px;
+	font-weight: 400;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	background-color: #E8F1F6;
+	border-radius: 3px;
+	padding: 20px;
+  }
+  #add-img button{
+	width: 173px;
+	height: 36px;
+	border: none;
+	border-radius: 50px;
+	background-color: rgba(203, 214, 220, 1);
+	color: rgba(48, 102, 133, 1);
+  }
+  #add-img p{
+	font-size: 11px;
+	font-weight: 400;
+  }
+  .popup-add form {
+	height: 31%;
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid #B3B3B3;
+  }
+  .popup-add input{
+	width: 420px;
+	height: 51px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+	border-radius: 3px;
+	border: none;
+	margin-top: 5px;
+	margin-bottom: 20px;
+
+  }
+  select{
+	width: 420px;
+	height: 51px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+	border-radius: 3px;
+	border: none;
+	margin-top: 5px;
+	margin-bottom: 20px;
+
+  }
+  #confirmBtn{
+	background-color:#A7A7A7 ;
+	border: none;
+	color: #fff;
+	width: 237px;
+	height: 36px;
+	position: absolute;
+	bottom: 4%;
+  }
+
+  .popup-add .hidden{
+	display: none;
+  }
+
+
+
+  #preview{
+	position: absolute;
+	display: none;
+	width:180px;
+	height: 100%;
+	top: 0;
+  }

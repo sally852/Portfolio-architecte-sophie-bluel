@@ -16,8 +16,9 @@
 	<nav>
 		<ul>
 			<li>projects</li>
-			<li>contact</li>
-			<li>login</li>
+			<li><a href="#"></a>contact</li>
+			<li id="login-button">login</li>
+			<li id="logout-button">logout</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -35,53 +36,9 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>My Projects</h2>
-		<div class="gallery">
-			<figure>
-				<img src="assets/images/abajour-tahina.png" alt="Tahina Lampshade">
-				<figcaption>Tahina Lampshade</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-v.png" alt="Paris V Appartment">
-				<figcaption>Paris V Appartment</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/restaurant-sushisen-londres.png" alt="Sushisen Restaurant - London">
-				<figcaption>Sushisen Restaurant - London</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/la-balisiere.png" alt="La Balisière” Villa – Port-Louis">
-				<figcaption>“La Balisière” Villa – Port-Louis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/structures-thermopolis.png" alt="Thermopolis Structures">
-				<figcaption>Thermopolis Structures</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-x.png" alt="Paris X Appartment">
-				<figcaption>Paris X Appartment</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/le-coteau-cassis.png" alt="Le Coteau” Pavillon - Cassis">
-				<figcaption>“Le Coteau” Pavillon - Cassis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/villa-ferneze.png" alt="Ferneze Villa - Elba">
-				<figcaption>Ferneze Villa - Elba</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-xviii.png" alt="Paris XVIII Appartment">
-				<figcaption>Paris XVIII Appartment</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/bar-lullaby-paris.png" alt="Lullaby” Bar - Paris">
-				<figcaption>“Lullaby” Bar - Paris</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-				<figcaption>First Arte Hotel - New Delhi</figcaption>
-			</figure>
-		</div>
+		<h2 id="title">My Projects</h2>
+		<div id="category-buttons"></div>
+		<div class="gallery"></div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
@@ -96,6 +53,46 @@
 			<input type="submit" value="Send">
 		</form>
 	</section>
+	<div class="popup-delete">
+        <section class="modal hidden">
+			<button class="btn-close"><img src="./assets/icons/x.png" alt="x icon"></button>
+			<h3>Photo Gallery</h3>
+			<div id="delete-img"></div>
+			<button class="btn-add">Add a photo</button>
+		</section>
+		<div class="overlay hidden"></div>
+		<div class="edit-btn">
+			<img src="./assets/icons/Group.png" alt="edit icon">
+			<button class="btn btn-open">Edit</button>
+		</div>
+	</div>
+	<div class="popup-add">
+        <section class="modall hidden">
+			<div class="top-btns">
+				<button class="bttn-close"><img src="./assets/icons/x.png" alt="x"></button>
+				<button class="btn-goback"> <img src="./assets/icons/Vector.png" alt=""></button>
+			</div>
+			<h3>Add photo </h3>
+			<div id="add-img">
+				<img src="./assets/icons/photo.png" alt="photo">
+				<input type="file" id="fileInput" style="display: none;">
+				<button  id="addPhotoBtn">+ add photo </button>
+				<img id="preview">
+				<p>jpg, png: max 4 MB </p>
+			</div>
+			<form action="#" method="post">
+				<label for="title">Title</label>
+				<input type="text">
+				<label for="email">Category</label>
+				<select id="categorySelect">
+					<option value="" disabled selected></option>
+				</select>
+			</form>
+			<button id="confirmBtn">Confirm</button>
+		</section>
+		<div class="overlay hidden"></div>
+		
+	</div>
 </main>
 
 <footer>
@@ -105,5 +102,6 @@
 		</ul>
 	</nav>
 </footer>
+<script src="script.js"></script>
 </body>
 </html>
