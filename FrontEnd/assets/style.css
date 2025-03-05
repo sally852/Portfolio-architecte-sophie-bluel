@@ -129,10 +129,32 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+
+/****edit button****/
+.projects-title{
+   display: flex ;
+   justify-content: center;
+   margin-bottom: 50px;
 }
+.edit-btn{
+   margin-left: 25px;
+   display: none;
+}
+.btn-open{
+    border: none;
+	color: black;
+	padding: 0;
+	font-size: 16px;
+}
+.btn-open:hover{
+	background-color: #fff;
+	color: black;
+}
+.edit-btn img{
+  margin-bottom: -3px;
+}
+
+/****projects***/
 .gallery {
 	width: 100%;
 	display: grid;
@@ -140,11 +162,11 @@ li:hover {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
-
 .gallery img {
 	width: 100%;
-
 }
+
+/***contact**/
 #contact {
 width: 50%;
 margin: auto;
@@ -207,9 +229,9 @@ footer nav ul {
 
 /**********buttons******/
 #category-buttons{
-margin: 40px;
-display: flex;
-justify-content: center;
+	margin: 40px;
+	display: flex;
+	justify-content: center;
 }
 button {
     margin: 5px;
@@ -295,119 +317,84 @@ button[type="submit"]{
 
 
 /*****Modal*******/
-.btn-open{
-	position: absolute;
-    top: 13.8%;
-	left: 63%;
-	height: 30px;
-	border: none;
-	color: black;
-	font-size: 14px;
-	font-weight: 400;
-}
-.btn-open:hover{
-	background-color: #fff;
-	color: black;
-}
-.edit-btn img{
-	position: absolute;
-    top: 14.2%;
-	left: 62%;
 
-}
 .modal {
 	gap: 0.4rem;
 	width: 62%;
 	height: 19%;
 	position: absolute;
-	top: 12%;
+	top: 11%;
 	left: 16.5%;
 	background-color: #fff;
 	border: 1px solid #ddd;
 	border-radius: 10px;
 	z-index: 8;
-  }
-  
-  
-  
-  .popup-delete h3{
-    display: flex;
+}
+.popup-delete h3{
+	display: flex;
 	justify-content: center;
 	font-size: 26px;
 	font-weight: 400;
 	margin-top: 50px;
-  }
-  #delete-img{
+}
+#delete-img{
 	margin: 30px 115px;
 	height: 65%;
 	border-bottom: solid 1px #B3B3B3;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;
-  }
+}
 
-  #delete-img img {
+#delete-img img {
 	width: 85px;
 	position: relative;
-  }
-  figure{
+}
+figure{
 	position: relative;
 	display: inline-block;
-  }
-  figure .img-container{
+}
+figure .img-container{
 	display: block;
 	width: 100%;
 	height: auto;
-  }
-  figure button{
-    position: absolute; 
-    top: 0;
-    right:0 ;
-    background: rgba(0, 0, 0); 
-    color: white;
-    border: none;
-    padding: 2px 5px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 3px;
-  }
-  .edit-btn{
-	display: none;
-  }
-  
-  .modal button {
+}
+figure button{
+	position: absolute; 
+	top: 0;
+	right:0 ;
+	background: rgba(0, 0, 0); 
+	color: white;
+	border: none;
+	padding: 2px 5px;
+	cursor: pointer;
+	font-size: 14px;
+	border-radius: 3px;
+}
+.modal button {
 	cursor: pointer;
 	border: none;
 	font-weight: 600;
-  }
-  
-  .btn-add {
-  background-color: #1D6154;
-  color: #fff;
-  width: 40%;
-  position: absolute;
-  margin: 45px 30%;
-  bottom: 0;
-	
-  }
-  
-  .btn-open {
+}
+.btn-add {
+	background-color: #1D6154;
+	color: #fff;
+	width: 40%;
 	position: absolute;
-	bottom: 150px;
-  }
-  
-  .modal .btn-close {
-    position: absolute;
+	margin: 45px 30%;
+	bottom: 0;
+}
+.btn-close {
+	position: absolute;
 	right: 0;
-    font-weight: bold;
+	font-weight: bold;
 	color: black;
 	font-size: 24px;
-  }
-  .btn-goback img{
-	width: 16px;
-  }
-
-  .overlay {
+}
+.btn-close:hover{
+	background-color:#f3efef;
+}
+.overlay {
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -417,15 +404,14 @@ button[type="submit"]{
 	height: 100%;
 	background: rgba(0, 0, 0, 0.5);
 	z-index: 1;
-  }
+}
+.hidden{
+  display: none;
+}
 
-  .hidden{
-	display: none;
-  }
 
 
-  
-  .modall {
+.modall {
 	gap: 0.4rem;
 	width: 62%;
 	height: 19%;
@@ -436,38 +422,47 @@ button[type="submit"]{
 	border: 1px solid #ddd;
 	border-radius: 10px;
 	z-index: 8;
-  }
-  .popup-add section{
+}
+.popup-add section{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-  }
-  .bttn-close {
-    position: absolute;
+}
+.bttn-close {
+	position: absolute;
 	right: 0;
-    font-weight: bold;
+	font-weight: bold;
 	color: black;
 	font-size: 24px;
 	border: none;
 	background-color: #fff;
-  }
-  .btn-goback{
-    position: absolute;
+}
+.bttn-close:hover{
+	background-color:#f3efef;
+}
+.btn-goback{
+	position: absolute;
 	left: 0;
-    font-weight: bold;
+	font-weight: bold;
 	color: black;
 	font-size: 24px;
 	border: none;
 	background-color: #fff;
-  }
-  .popup-add h3{
+}
+.btn-goback img{
+	width: 16px;
+}
+.btn-goback:hover{
+	background-color:#f3efef;
+}
+.popup-add h3{
 	display: flex;
 	justify-content: center;
 	font-size: 26px;
 	font-weight: 400;
 	margin-top: 50px;
-  }
-  #add-img{
+}
+#add-img{
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -482,26 +477,26 @@ button[type="submit"]{
 	background-color: #E8F1F6;
 	border-radius: 3px;
 	padding: 20px;
-  }
-  #add-img button{
+}
+#add-img button{
 	width: 173px;
 	height: 36px;
 	border: none;
 	border-radius: 50px;
 	background-color: rgba(203, 214, 220, 1);
 	color: rgba(48, 102, 133, 1);
-  }
-  #add-img p{
+}
+#add-img p{
 	font-size: 11px;
 	font-weight: 400;
-  }
-  .popup-add form {
+}
+.popup-add form {
 	height: 31%;
 	display: flex;
 	flex-direction: column;
 	border-bottom: 1px solid #B3B3B3;
-  }
-  .popup-add input{
+}
+.popup-add input{
 	width: 420px;
 	height: 51px;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
@@ -509,9 +504,8 @@ button[type="submit"]{
 	border: none;
 	margin-top: 5px;
 	margin-bottom: 20px;
-
-  }
-  select{
+}
+select{
 	width: 420px;
 	height: 51px;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
@@ -519,9 +513,8 @@ button[type="submit"]{
 	border: none;
 	margin-top: 5px;
 	margin-bottom: 20px;
-
-  }
-  #confirmBtn{
+}
+#confirmBtn{
 	background-color:#A7A7A7 ;
 	border: none;
 	color: #fff;
@@ -529,18 +522,17 @@ button[type="submit"]{
 	height: 36px;
 	position: absolute;
 	bottom: 4%;
-  }
-
-  .popup-add .hidden{
-	display: none;
-  }
-
-
-
-  #preview{
-	position: absolute;
-	display: none;
-	width:180px;
-	height: 100%;
-	top: 0;
-  }
+}
+#confirmBtn:hover{
+    background-color:#d1cfcf ;
+}
+.popup-add .hidden{
+  display: none;
+}
+#preview{
+position: absolute;
+display: none;
+width:180px;
+height: 100%;
+top: 0;
+}

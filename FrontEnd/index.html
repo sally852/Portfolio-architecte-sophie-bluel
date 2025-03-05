@@ -26,7 +26,7 @@
 <main>
 	<section id="introduction">
 		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt="">
+			<img src="./assets/images/sophie-bluel.png" alt="Image of Sophie">
 		</figure>
 		<article>
 			<h2>Space Designer</h2>
@@ -36,7 +36,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2 id="title">My Projects</h2>
+		<div class="projects-title">
+			<h2 id="title">My Projects</h2>
+			<div class="edit-btn">
+				<img src="./assets/icons/Group.png" alt="edit icon">
+				<button class=" btn-open">Edit</button>
+			</div>
+		</div>
 		<div id="category-buttons"></div>
 		<div class="gallery"></div>
 	</section>
@@ -61,10 +67,6 @@
 			<button class="btn-add">Add a photo</button>
 		</section>
 		<div class="overlay hidden"></div>
-		<div class="edit-btn">
-			<img src="./assets/icons/Group.png" alt="edit icon">
-			<button class="btn btn-open">Edit</button>
-		</div>
 	</div>
 	<div class="popup-add">
         <section class="modall hidden">
@@ -91,7 +93,6 @@
 			<button id="confirmBtn">Confirm</button>
 		</section>
 		<div class="overlay hidden"></div>
-		
 	</div>
 </main>
 

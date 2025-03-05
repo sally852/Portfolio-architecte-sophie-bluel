@@ -8,7 +8,7 @@ document.getElementById("login-button").addEventListener("click", () => {
 let allProjects = [];
 let categories = [];
 
-//fetching
+//fetching data
 const fetchCategories = async () => {
     try {
       const response = await fetch('http://localhost:5678/api/categories');
@@ -26,7 +26,8 @@ const fetchCategories = async () => {
 
 const fetchProjects = async () => {
   try {
-    const response = await fetch('http://localhost:5678/api/works'); 
+    const response = await fetch('http://localhost:5678/api/works');
+
     if (!response.ok) throw new Error();
 
     allProjects = await response.json(); 
@@ -40,9 +41,10 @@ const fetchProjects = async () => {
 };
 
 
-// display
+// displaying buttons
 const displayCategoryButtons = (categories) => {
     const buttonsContainer = document.getElementById('category-buttons');
+
     //button all
     const allButton = document.createElement('button');
     allButton.textContent = "All";
@@ -66,15 +68,15 @@ const displayCategoryButtons = (categories) => {
     });
   };
   
-    const setActiveButton = (activeButton) => {
-        const buttons = document.querySelectorAll(".category-button");
-    
-        buttons.forEach((button) => {
-        button.classList.remove("active"); 
-        });
-    
-        activeButton.classList.add("active"); 
-    };
+  const setActiveButton = (activeButton) => {
+      const buttons = document.querySelectorAll(".category-button");
+  
+      buttons.forEach((button) => {
+      button.classList.remove("active"); 
+      });
+  
+      activeButton.classList.add("active"); 
+  };
     
 
 // display projets
@@ -97,7 +99,8 @@ const displayProjects = (projects) => {
   });
 };
 
-// display projects par category
+
+// display projects by category
 const displayCategory = (projects, filterCategoryId) => {
   const gallery = document.querySelector('.gallery');
   gallery.innerHTML = ''; 
@@ -148,6 +151,10 @@ const openAddPhotoModal = function () {
   modall.classList.remove("hidden");
   overlay.classList.remove("hidden");
   modal.classList.add("hidden");
+  fileInput.value = '';
+  preview.style.display = "none"; 
+  document.getElementById('titleInput').value = '';
+  categorySelect.value = '';
 };
 const closeAddPhotoModal = function () {
   modall.classList.add("hidden");
@@ -169,14 +176,22 @@ if (token) {
   document.getElementById('login-button').style.display = 'none'; 
   document.getElementById('logout-button').style.display = 'block';
   document.getElementById('category-buttons').style.display = 'none'; 
-  document.getElementById('title').style.marginBottom = '55px';
-  editBtn.style.display = 'block';
+  editBtn.style.display = 'block'
 
   openDeletePhotoBtn.addEventListener("click", openDeletePhotoModal);
   closeDeletePhotoBtn.addEventListener("click", closeDeletePhotoModal);
+  overlay.addEventListener("click",closeDeletePhotoModal );
   openAddPhotoBtn.addEventListener("click", openAddPhotoModal);
   closeAddPhotoBtn.addEventListener("click", closeAddPhotoModal);
+  overlay.addEventListener("click",closeAddPhotoModal);
   goBackBtn.addEventListener("click", goBack); 
+  
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+      closeDeletePhotoModal();
+      closeAddPhotoModal();
+    }
+  });
 }
 
 
@@ -209,7 +224,7 @@ const displayModalProjects = (projects) => {
 };
 
 
-//display categorys on the modal
+//display categories on the modal
 const displayModalCategory = (categories) => {
   const categorySelect = document.getElementById("categorySelect");
   
@@ -218,6 +233,42 @@ const displayModalCategory = (categories) => {
     option.value = category.id; 
     option.textContent = category.name;
     categorySelect.appendChild(option); 
+  });
+};
+
+
+
+// delete project
+const addDeleteEvent = () => {
+  document.querySelectorAll(".delete-btn").forEach(button => {
+    button.addEventListener("click", async (event) => {
+      const figure = event.target.closest(".photo-container");
+      const projectId = figure.getAttribute("data-id");
+
+      const confirmation = confirm("Are you sure you want to delete this photo?");
+
+      try {
+        const response = await fetch(`http://localhost:5678/api/works/${projectId}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          alert("Failed to delete! Please try again.");
+          throw new Error("Failed to delete!");
+        }
+
+        figure.remove(); 
+        alert("Photo deleted!");
+        fetchProjects();
+
+      } catch (error) {
+        console.error("Erreur :", error);
+      }
+    });
   });
 };
 
@@ -241,42 +292,6 @@ fileInput.addEventListener("change", (event) => {
 });
 
 
-
-
-// delete project
-const addDeleteEvent = () => {
-  document.querySelectorAll(".delete-btn").forEach(button => {
-    button.addEventListener("click", async (event) => {
-      const figure = event.target.closest(".photo-container");
-      const projectId = figure.getAttribute("data-id");
-
-      const confirmation = confirm("Are you sure you want to delete this photo?");
-
-      try {
-        const response = await fetch(`http://localhost:5678/api/works/${projectId}`, {
-          method: "DELETE",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to delete!");
-        }
-
-        figure.remove(); 
-        alert("Photo deleted!");
-
-      } catch (error) {
-        console.error("Erreur :", error);
-      }
-    });
-  });
-};
-
-
-
 //add project
 confirmBtn.addEventListener("click", async () => {
 
@@ -284,11 +299,12 @@ confirmBtn.addEventListener("click", async () => {
   const title = titleInput.value; 
   const categoryId = categorySelect.value;
    
-  if (!title || !categoryId || !file) {
+  if (!file || !title || !categoryId) {
     alert("not correctly filled out!");
     return;
   }
-
+ 
+  //FormData
   const formData = new FormData();
   formData.append("title", title);  
   formData.append("category", categoryId);  
@@ -304,21 +320,25 @@ confirmBtn.addEventListener("click", async () => {
     });
 
     if (!response.ok) {
+      alert("Failed to add the project! Please try again.");
       throw new Error("Failed to add the project!");
     }
 
     const data = await response.json();
+    console.log("added:", data);
 
     alert("correctly sent!");
-  
-    console.log("added:", data);
+
+    fetchProjects();
 
   } catch (error) {
     console.error(error);
   }
+
   modal.classList.add("hidden");
   modall.classList.add("hidden");
   overlay.classList.add("hidden");
+
 });
 
 
