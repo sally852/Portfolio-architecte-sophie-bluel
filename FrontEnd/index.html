@@ -79,16 +79,19 @@
 				<img src="./assets/icons/photo.png" alt="photo">
 				<input type="file" id="fileInput" style="display: none;">
 				<button  id="addPhotoBtn">+ add photo </button>
-				<img id="preview">
+				<img id="preview" alt="added project">
 				<p>jpg, png: max 4 MB </p>
 			</div>
+			<span id="fileError">Please choose a file</span>
 			<form id="ProjectForm">
-				<label for="title">Title</label>
+				<label for="titleInput">Title</label>
 				<input type="text" id="titleInput">
-				<label for="email">Category</label>
+				<span id="titleError">Please enter a title</span>
+				<label for="categorySelect">Category</label>
 				<select id="categorySelect">
 					<option value="" disabled selected></option>
 				</select>
+				<span id="categoryError">Please choose a category</span>
 			</form>
 			<button id="confirmBtn">Confirm</button>
 		</section>

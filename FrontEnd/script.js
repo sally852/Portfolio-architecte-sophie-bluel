@@ -8,10 +8,12 @@ document.getElementById("login-button").addEventListener("click", () => {
 let allProjects = [];
 let categories = [];
 
+let apiUrl = 'http://localhost:5678/api'
+
 //fetching data
 const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:5678/api/categories');
+      const response = await fetch(apiUrl + '/categories');
       if (!response.ok) throw new Error();
       
       categories = await response.json(); 
@@ -20,13 +22,13 @@ const fetchCategories = async () => {
       displayModalCategory(categories);
   
     } catch (error) {
-      console.error('Erreur de chargement des catégories :', error);
+      console.error('Error fetching categories :', error);
     }
-  };
+};
 
 const fetchProjects = async () => {
   try {
-    const response = await fetch('http://localhost:5678/api/works');
+    const response = await fetch(apiUrl + '/works');
 
     if (!response.ok) throw new Error();
 
@@ -36,47 +38,47 @@ const fetchProjects = async () => {
     displayModalProjects(allProjects)
 
   } catch (error) {
-    console.error('Error fetching the projects:', error);
+    console.error('Error fetching projects:', error);
   }
 };
 
 
-// displaying buttons
+// display categories
 const displayCategoryButtons = (categories) => {
-    const buttonsContainer = document.getElementById('category-buttons');
+  const buttonsContainer = document.getElementById('category-buttons');
 
-    //button all
-    const allButton = document.createElement('button');
-    allButton.textContent = "All";
-    allButton.classList.add("category-button", "active"); 
-    allButton.addEventListener('click', () => {
-      displayProjects(allProjects);
-      setActiveButton(allButton); 
+  //button all
+  const allButton = document.createElement('button');
+  allButton.textContent = "All";
+  allButton.classList.add("category-button", "active"); 
+  allButton.addEventListener('click', () => {
+    displayProjects(allProjects);
+    setActiveButton(allButton); 
+  });
+  buttonsContainer.appendChild(allButton);
+
+  //other buttons
+  categories.forEach((category) => {
+    const categoryButton = document.createElement('button');
+    categoryButton.textContent = category.name;
+    categoryButton.classList.add("category-button");
+    categoryButton.addEventListener('click', () => {
+      displayCategory(allProjects, category.id);
+      setActiveButton(categoryButton);
     });
-    buttonsContainer.appendChild(allButton);
+    buttonsContainer.appendChild(categoryButton);
+  });
+};
   
-    //other buttons
-    categories.forEach((category) => {
-      const categoryButton = document.createElement('button');
-      categoryButton.textContent = category.name;
-      categoryButton.classList.add("category-button");
-      categoryButton.addEventListener('click', () => {
-        displayCategory(allProjects, category.id);
-        setActiveButton(categoryButton);
-      });
-      buttonsContainer.appendChild(categoryButton);
+const setActiveButton = (activeButton) => {
+    const buttons = document.querySelectorAll(".category-button");
+
+    buttons.forEach((button) => {
+    button.classList.remove("active"); 
     });
-  };
-  
-  const setActiveButton = (activeButton) => {
-      const buttons = document.querySelectorAll(".category-button");
-  
-      buttons.forEach((button) => {
-      button.classList.remove("active"); 
-      });
-  
-      activeButton.classList.add("active"); 
-  };
+
+    activeButton.classList.add("active"); 
+};
     
 
 // display projets
@@ -151,10 +153,10 @@ const openAddPhotoModal = function () {
   modall.classList.remove("hidden");
   overlay.classList.remove("hidden");
   modal.classList.add("hidden");
-  fileInput.value = '';
   preview.style.display = "none"; 
   document.getElementById('titleInput').value = '';
   categorySelect.value = '';
+  confirmBtn.style.backgroundColor = '#A7A7A7';
 };
 const closeAddPhotoModal = function () {
   modall.classList.add("hidden");
@@ -248,7 +250,7 @@ const addDeleteEvent = () => {
       const confirmation = confirm("Are you sure you want to delete this photo?");
 
       try {
-        const response = await fetch(`http://localhost:5678/api/works/${projectId}`, {
+        const response = await fetch(apiUrl + `/works/${projectId}`, {
           method: "DELETE",
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -263,6 +265,7 @@ const addDeleteEvent = () => {
 
         figure.remove(); 
         alert("Photo deleted!");
+
         fetchProjects();
 
       } catch (error) {
@@ -292,26 +295,73 @@ fileInput.addEventListener("change", (event) => {
 });
 
 
-//add project
-confirmBtn.addEventListener("click", async () => {
+  
 
-  const file = fileInput.files[0]; 
-  const title = titleInput.value; 
-  const categoryId = categorySelect.value;
-   
-  if (!file || !title || !categoryId) {
-    alert("not correctly filled out!");
-    return;
+//add project
+const getFormValues = () => ({
+  file: fileInput.files[0],
+  title: titleInput.value,
+  categoryId: categorySelect.value
+});
+
+const checkFields = () => {
+  const { file, title, categoryId } = getFormValues();
+
+  if (file && title && categoryId) {
+    confirmBtn.style.backgroundColor = '#1D6154';
+  }
+
+  if (file) {
+    fileError.style.display = "none";
+    document.getElementById('add-img').style.borderColor = ""; 
+  }
+
+  if (title) {
+    titleError.style.display = "none";
+    titleInput.style.borderColor = ""; 
   }
  
-  //FormData
+  if (categoryId) {
+    categoryError.style.display = "none"; 
+    categorySelect.style.borderColor = ""; 
+  }
+};
+
+fileInput.addEventListener("change", checkFields);
+titleInput.addEventListener('input', checkFields);
+categorySelect.addEventListener("change", checkFields);
+
+
+//FormData
+confirmBtn.addEventListener("click", async () => {
+  const { file, title, categoryId } = getFormValues();
+
+  if (!file) {
+    document.getElementById('add-img').style.border = "1px solid red";
+    fileError.style.display = "block";
+  }
+
+  if (!title) {
+    titleInput.style.border = "1px solid red";
+    titleError.style.display = "block";
+  } 
+
+  if (!categoryId) {
+    categorySelect.style.border = "1px solid red";
+    categoryError.style.display = "block";  
+  } 
+
+  if (!file || !title || !categoryId) {
+    return;
+  }
+
   const formData = new FormData();
   formData.append("title", title);  
   formData.append("category", categoryId);  
   formData.append("image", file);  
 
   try {
-    const response = await fetch("http://localhost:5678/api/works", {
+    const response = await fetch(apiUrl + "/works", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`, 
@@ -320,7 +370,7 @@ confirmBtn.addEventListener("click", async () => {
     });
 
     if (!response.ok) {
-      alert("Failed to add the project! Please try again.");
+      alert("Failed to add the project!");
       throw new Error("Failed to add the project!");
     }
 

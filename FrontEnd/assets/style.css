@@ -323,7 +323,7 @@ button[type="submit"]{
 	width: 62%;
 	height: 19%;
 	position: absolute;
-	top: 11%;
+	top: 12%;
 	left: 16.5%;
 	background-color: #fff;
 	border: 1px solid #ddd;
@@ -339,15 +339,17 @@ button[type="submit"]{
 }
 #delete-img{
 	margin: 30px 115px;
-	height: 65%;
+	max-height: 65%;
+	overflow-y: auto;
 	border-bottom: solid 1px #B3B3B3;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 8px;
+	gap: 7px;
+	padding-bottom:9px ;
 }
 
 #delete-img img {
-	width: 85px;
+	width: 106px;
 	position: relative;
 }
 figure{
@@ -478,6 +480,11 @@ figure button{
 	border-radius: 3px;
 	padding: 20px;
 }
+#fileError{
+	display: none ;
+	color: red;
+	
+}
 #add-img button{
 	width: 173px;
 	height: 36px;
@@ -494,26 +501,38 @@ figure button{
 	height: 31%;
 	display: flex;
 	flex-direction: column;
+	padding-bottom: 15px;
 	border-bottom: 1px solid #B3B3B3;
+	
 }
-.popup-add input{
+#titleInput{
 	width: 420px;
 	height: 51px;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 	border-radius: 3px;
 	border: none;
-	margin-top: 5px;
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
-select{
+#titleError{
+	display: none ;
+	color: red;
+	margin-bottom: 10px;
+}
+#categorySelect{
 	width: 420px;
 	height: 51px;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 	border-radius: 3px;
 	border: none;
-	margin-top: 5px;
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 5px;
 }
+#categoryError{
+	display: none ;
+	color: red;
+}
+
 #confirmBtn{
 	background-color:#A7A7A7 ;
 	border: none;
@@ -522,9 +541,6 @@ select{
 	height: 36px;
 	position: absolute;
 	bottom: 4%;
-}
-#confirmBtn:hover{
-    background-color:#d1cfcf ;
 }
 .popup-add .hidden{
   display: none;
